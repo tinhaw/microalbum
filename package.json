@@ -1,0 +1,30 @@
+{
+  "name": "album",
+  "version": "1.0.0",
+  "description": "album",
+  "main": "app.js",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "formidable": "^1.2.1",
+    "multer": "^1.4.1",
+    "silly-datetime": "^0.1.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tinhaw/microalbum.git"
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "dinghao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tinhaw/microalbum/issues"
+  },
+  "homepage": "https://github.com/tinhaw/microalbum#readme"
+}

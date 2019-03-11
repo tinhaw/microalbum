@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <style>
+
+        .row{padding-top: 20px}
+        #albumname{width: 200px}
+        input{width: 500px;box-shadow: 0 0 5px #CCC}
+    </style>
+    <title>管理首页</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-info navbar-dark">
+    <span class="navbar-brand" href="#">管理员页面</span>
+    <ul class="navbar-nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link" href="#" id="maLink">创建相册</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" id="upLink">上传</a>
+        </li>
+    </ul>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col-12 operate">
+
+        </div>
+    </div>
+
+</div>
+</body>
+<script type="text/template" id="upPage">
+    <p>
+        <span>选择相册：</span>
+        <select name="albumname" id="albumname">
+            <option value="111">111</option>
+
+        </select>
+    </p>
+    <p>
+        <input type="file" formenctype="multipart/form-data" id="upInput">
+        <button class="btn btn-primary" id="upBtn">上传图片</button>
+    </p>
+    <p class="respond"></p>
+</script>
+<script type="text/template" id="maPage">
+    <p><span>输入相册名称：</span><input type="text" placeholder="请在此输入相册的名称" id="newAlbumName">
+        <button class="btn btn-primary" id="createBtn">确认创建</button>
+    </p>
+    <p class="respond"></p>
+</script>
+<script>
+    function createMaPage() {
+        $('.nav-link').removeClass('active');
+        $('#maLink').addClass('active');
+        var template=$('#maPage').html();
+        $(template).appendTo('.operate');
+
+    }
+
+    function createUpPage() {
+        $('.nav-link').removeClass('active');
+        $('#upLink').addClass('active');
+        var template=$('#upPage').html();
+        $(template).appendTo('.operate');
+    }
+
+    $('#maLink').click(function () {
+        $('.operate').empty();
+
+        createMaPage();
+    });
+
+    $('#upLink').click(function () {
+        $('.operate').empty();
+        $('.nav-link').removeClass('active');
+        $(this).addClass('active');
+        createUpPage();
+    });
+
+    $('.operate').on('click','#createBtn',function () {
+        var newAlbumName=$('#newAlbumName').val();
+        $.get('/create',{'newAlbumName':newAlbumName},function (json) {
+            $('.respond').html(json);
+        });
+    });
+
+    $('.operate').on('click','#upBtn',function () {
+
+        var data=$('#upInput').val();
+        $.ajax({
+            type:'POST',
+            url:'/upload',
+            contentType:'multipart/form-data',
+            data:data,
+            success:function (json) {
+                $('.respond').html(json);
+            }
+        });
+    });
+
+
+    createUpPage();
+</script>
+</html>
